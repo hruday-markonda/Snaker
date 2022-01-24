@@ -3,13 +3,18 @@ package snaker;
 import processing.core.PApplet;
 
 public class App extends PApplet {
-
+    // GAME SPECIFICATIONS
     public static final int WIDTH = 720;
     public static final int HEIGHT = 760;
-
     public static final int FPS = 60;
+    //
+
+    //MAIN MENU IS LOADED
+    public MainMenu MenuScreen;
+    //
 
     public App() {
+        this.MenuScreen = new MainMenu(this);
     }
 
     public void settings() {
@@ -23,9 +28,8 @@ public class App extends PApplet {
     }
 
     public void draw() {
-        background(57, 236, 255);
-        fill(0, 0, 0);
-        rect(0, 40, WIDTH, HEIGHT - 40);
+        //rect(0, 40, WIDTH, HEIGHT - 40);
+        this.MenuScreen.tick()
     }
 
     public static void main(String[] args) {
