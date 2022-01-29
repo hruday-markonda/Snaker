@@ -1,12 +1,16 @@
 package snaker;
 
+import processing.core.PApplet;
+
 public class MainMenu{
 
+    public PApplet curApp;
     public int frameCount;
 
     //MAIN MENU CONSTRUCTOR
-    public MainMenu() {
+    public MainMenu(PApplet curApp) {
         this.frameCount = 0;
+        this.curApp = curApp;
     }
 
     public void tick() {
@@ -14,8 +18,8 @@ public class MainMenu{
     }
 
     public void draw() {
-        background(57, 236, 255);
-        fill(0, 0, 0);
+        curApp.background(57, 236, 255);
+        curApp.fill(0, 0, 0);
     }
 
 }

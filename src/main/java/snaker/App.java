@@ -9,12 +9,12 @@ public class App extends PApplet {
     public static final int FPS = 60;
     //
 
-    //MAIN MENU IS LOADED
-    public MainMenu MenuScreen;
+    //GAME MANAGER IS LOADED
+    public GameManager GameManager;
     //
 
     public App() {
-        this.MenuScreen = new MainMenu(this);
+        this.GameManager = new GameManager(this);
     }
 
     public void settings() {
@@ -29,7 +29,8 @@ public class App extends PApplet {
 
     public void draw() {
         //rect(0, 40, WIDTH, HEIGHT - 40);
-        this.MenuScreen.tick()
+        this.GameManager.tick();
+        this.GameManager.draw();
     }
 
     public static void main(String[] args) {
