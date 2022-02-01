@@ -6,11 +6,13 @@ public class MainMenu{
 
     public PApplet curApp;
     public int frameCount;
+    public int option; //Option has value 1 for option 1, 2 for option 2, etc.
 
     //MAIN MENU CONSTRUCTOR
     public MainMenu(PApplet curApp) {
         this.frameCount = 0;
         this.curApp = curApp;
+        this.option = 1;
     }
 
     public void tick() {
