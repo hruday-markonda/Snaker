@@ -1,6 +1,7 @@
 package snaker;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class App extends PApplet {
     // GAME SPECIFICATIONS
@@ -10,11 +11,11 @@ public class App extends PApplet {
     //
 
     //GAME MANAGER IS LOADED
-    public GameManager GameManager;
+    private GameManager GameManager;
+    private PImage background;
     //
 
     public App() {
-        this.GameManager = new GameManager(this);
     }
 
     public void settings() {
@@ -23,22 +24,22 @@ public class App extends PApplet {
 
     public void setup() {
         frameRate(FPS);
-
+        this.GameManager = new GameManager(this);
+        this.background = this.loadImage("src/main/resources/backgrounds/moon_background.jpeg");
         // Load images during setup
     }
 
     public void draw() {
         //rect(0, 40, WIDTH, HEIGHT - 40);
+        this.image(this.background, -250, -250);
+        this.GameManager.updateMousePos(mouseX, mouseY);
         this.GameManager.tick();
         this.GameManager.draw();
     }
 
-    public static void main(String[] args) {
-        PApplet.main("snaker.App");
-    }
+    public static void main(String[] args) { PApplet.main("snaker.App"); }
 
-    public void keyReleased(){
-        this.GameManager.keyHandler(keyCode);
+    public void keyReleased(){ this.GameManager.keyHandler(keyCode); }
 
-    }
+    public void mouseReleased(){ this.GameManager.processMouseClick(); }
 }
