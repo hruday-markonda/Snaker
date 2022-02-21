@@ -23,13 +23,6 @@ public class InputHandler{
     protected int mouseY = 0;
     protected boolean trackClick = false;
 
-    // public InputHandler(){
-    //     this.keyInput = "";
-    //     this.mouseX = 0;
-    //     this.mouseY = 0;
-    //     this.trackClick = false;
-    // }
-
     public void keyHandler(int inputKey){
         if (inputKey == Inputs.LEFT.unicode) { this.keyInput = Inputs.LEFT.dir; }
         else if (inputKey == Inputs.UP.unicode) { this.keyInput = Inputs.UP.dir; }
@@ -38,6 +31,7 @@ public class InputHandler{
         else if (inputKey == Inputs.ENTER.unicode) { this.keyInput = Inputs.ENTER.dir; }
 
         System.out.println(this.keyInput);
+        
     }
 
     public void updateMousePos(int mouseX, int mouseY){ this.mouseX = mouseX; this.mouseY = mouseY; 
@@ -49,6 +43,10 @@ public class InputHandler{
     }
 
     public boolean returnTrackClick(){ return this.trackClick; }
+
+    public void setKeyInput(String newKeyInput){ this.keyInput = newKeyInput; }
+    
+    public String returnKeyInput(){ return this.keyInput; }
 
     public int returnMouseX(){ return this.mouseX; }
     

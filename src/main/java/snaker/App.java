@@ -39,7 +39,12 @@ public class App extends PApplet {
 
     public static void main(String[] args) { PApplet.main("snaker.App"); }
 
-    public void keyReleased(){ this.GameManager.keyHandler(keyCode); }
+    public void keyReleased(){ 
+        this.GameManager.keyHandler(keyCode); 
+        if(this.GameManager.getScreenName() == "game"){
+            this.GameManager.returnGameScreen().gameInput(this.GameManager.returnKeyInput());
+        }
+    }
 
     public void mouseReleased(){ this.GameManager.processMouseClick(); }
 }

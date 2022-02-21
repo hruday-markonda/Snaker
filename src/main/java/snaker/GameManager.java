@@ -45,13 +45,11 @@ public class GameManager extends InputHandler{ //GameManager is also acts as the
 
     public void draw(){
         if(this.screenName.equals("main")){ this.MainMenu.tick(); this.MainMenu.draw(); }
-        //else if(this.screenName.equals("game")){ this.GameScreen.tick(); this.GameScreen.draw(); }
-        //else if(this.screenName.equals("edit")){ this.EditScreen.tick(); this.EditScreen.draw(); }
+        else if(this.screenName.equals("game")){ this.GameScreen.tick(); this.GameScreen.draw(); }
+        else if(this.screenName.equals("edit")){ this.EditScreen.tick(); this.EditScreen.draw(); }
         //else if(this.screenName.equals("game")){ System.out.println("game screen :)"); }
         //else if(this.screenName.equals("edit")){ System.out.println("edit screen :)"); }
     }
-
-    public void changeScreen(String screenName){ this.screenName = screenName; }
 
     public PFont returnFont(){ return this.gameFont; }
 
@@ -59,4 +57,12 @@ public class GameManager extends InputHandler{ //GameManager is also acts as the
         if ((corX <= upX && corX >= lowX) && (corY <= upY && corY >= lowY)){ return true; }
         return false;
     }
+
+    public String getScreenName(){ return this.screenName; }
+
+    public void changeScreen(String screenName){ this.screenName = screenName; }
+
+    public void resetGame(){ this.GameScreen = new GameScreen(curApp, this); }
+
+    public GameScreen returnGameScreen(){ return this.GameScreen; }
 }
