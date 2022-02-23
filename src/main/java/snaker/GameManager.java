@@ -5,22 +5,6 @@ import processing.core.PFont;
 
 public class GameManager extends InputHandler{ //GameManager is also acts as the Menu Screen
 
-    // enum Inputs{
-    //     LEFT(37, "left"),
-    //     UP(38, "up"),
-    //     RIGHT(39, "right"),
-    //     DOWN(40, "down"),
-    //     ENTER(10, "enter");
-
-    //     public final int unicode;
-    //     public final String dir;
-
-    //     Inputs(int unicode, String dir) {
-    //         this.unicode = unicode;
-    //         this.dir = dir;
-    //     }
-    // }
-
     private MainMenu MainMenu;
     private GameScreen GameScreen;
     private EditScreen EditScreen;
@@ -46,9 +30,6 @@ public class GameManager extends InputHandler{ //GameManager is also acts as the
     public void draw(){
         if(this.screenName.equals("main")){ this.MainMenu.tick(); this.MainMenu.draw(); }
         else if(this.screenName.equals("game")){ this.GameScreen.tick(); this.GameScreen.draw(); }
-        else if(this.screenName.equals("edit")){ this.EditScreen.tick(); this.EditScreen.draw(); }
-        //else if(this.screenName.equals("game")){ System.out.println("game screen :)"); }
-        //else if(this.screenName.equals("edit")){ System.out.println("edit screen :)"); }
     }
 
     public PFont returnFont(){ return this.gameFont; }

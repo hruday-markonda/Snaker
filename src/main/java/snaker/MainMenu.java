@@ -18,13 +18,13 @@ public class MainMenu{
 
     public void tick(){ 
         if(this.GameManager.returnTrackClick() == true){
-            String newScreen = "";
-            boolean playBound = this.GameManager.checkBounds(463, 253, 340, 260, this.GameManager.returnMouseX(), this.GameManager.returnMouseY());
-            boolean editBound = this.GameManager.checkBounds(463, 253, 450, 370, this.GameManager.returnMouseX(), this.GameManager.returnMouseY());
-            if(playBound == true){ newScreen = "game"; }
-            if(editBound == true){ newScreen = "edit"; }
+            boolean playBound = this.GameManager.checkBounds(463, 253, 490, 230, this.GameManager.returnMouseX(), this.GameManager.returnMouseY());
+            if(playBound == true){ 
+                this.GameManager.resetGame(); 
+                this.GameManager.changeScreen("game"); 
+            }
             this.GameManager.processMouseClick();
-            this.GameManager.changeScreen(newScreen);
+            
         }
         this.frameCount = (this.frameCount + 1) % 60; 
     }
@@ -47,28 +47,16 @@ public class MainMenu{
         curApp.fill(0);
         curApp.rect(190, 210, 340, 280, 30);
         
-        //curApp.fill(160);
-        //curApp.rect(253, 260, 210, 80);
-        //curApp.rect(253, 370, 210, 80);
-        curApp.fill(255);
+        if (this.tempTrack == false){ curApp.fill(Math.abs(30 - this.frameCount) * 255 / 30); } 
+        else { curApp.fill(255); }
         curApp.textFont(this.GameManager.returnFont(), 55);
-        boolean playBound = this.GameManager.checkBounds(463, 253, 340, 260, this.GameManager.returnMouseX(), this.GameManager.returnMouseY());
-        boolean editBound = this.GameManager.checkBounds(463, 253, 450, 370, this.GameManager.returnMouseX(), this.GameManager.returnMouseY());
+        boolean playBound = this.GameManager.checkBounds(463, 253, 490, 230, this.GameManager.returnMouseX(), this.GameManager.returnMouseY());
 
-        if(playBound == false){ 
-            curApp.text("PLAY", 260, 320); 
-        } else { 
-            curApp.fill(58, 232, 238);
-            curApp.text("PLAY", 260, 320); 
-        }
-
-        if(editBound == false){
-            curApp.fill(255);
-            curApp.text("EDIT", 265, 430);
-        } else {
-            curApp.fill(58, 232, 238);
-            curApp.text("EDIT", 265, 430);
-        }
+        if(playBound == true){ curApp.fill(58, 232, 238); }
+        curApp.text("PRESS", 233, 297); 
+        curApp.text("HERE", 200, 377); 
+        curApp.text("TO", 422, 377); 
+        curApp.text("PLAY", 260, 457); 
         
     }
 

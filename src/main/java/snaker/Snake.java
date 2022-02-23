@@ -33,10 +33,6 @@ public class Snake{
         this.snakeSize = 0;
     }
 
-    public void updateSnakeNext(String newTraj){
-        this.snakeHead.updateTrajectory(newTraj);
-    }
-
     public void tick(){ //updates snake position
         if(this.isMoving == true){
             Node newTail = this.generateNewTail(); //potential new tail
@@ -105,6 +101,27 @@ public class Snake{
         Node newTail = new Node("body", oldTailTraj, cursor, null, oldTailCorX, oldTailCorY, this.bodySpritesAll[this.spriteTrack]);
         return newTail;
     }
+
+    public boolean snakeCollision(){
+        if(this.snakeSize > 3){
+            Node cursor = this.snakeHead.getPrevNode();
+            while(cursor != null){
+                if((cursor.getCorX() == this.snakeHead.getCorX()) && (cursor.getCorY() == this.snakeHead.getCorY())){
+                    return true;
+                }
+                cursor = cursor.getPrevNode();
+            }
+            return false; 
+        }
+
+        if(this.snakeHead.getCorX() < 40 || this.snakeHead.getCorX() > 640 || this.snakeHead.getCorY() < 40 || this.snakeHead.getCorY() > 640){
+            return true;
+        }
+
+        return false;
+    }
+
+    public int getSnakeSize(){ return this.snakeSize; }
 
     public void setMoving(boolean newValue){ this.isMoving = newValue; }
 
