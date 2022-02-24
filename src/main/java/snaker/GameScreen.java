@@ -6,7 +6,7 @@ import java.lang.Math;
 import java.util.Arrays;
 
 public class GameScreen{
-
+    //Attributes
     private PApplet curApp;
     private GameManager GameManager;
     private int frameCount;
