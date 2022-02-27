@@ -11,31 +11,22 @@ public class Snake{
     private boolean isMoving;
     private boolean consumedFruit;
     private int snakeSize;
-    private PImage headSprite;
-    private PImage[] bodySpritesAll;
     private int spriteTrack;
-    private PApplet curApp;
 
-    public Snake(int startX, int startY, String initTraj, PApplet app){ //initTraj accepts left, right, up, down
-        this.headSprite = app.loadImage("src/main/resources/snake/SnakeHead.png");
-        this.bodySpritesAll = new PImage[5];
-        for(int i = 0; i < 5; i++){
-            String imageSrc = "src/main/resources/snake/SnakeBody" + (i+1) + ".png";
-            bodySpritesAll[i] = app.loadImage(imageSrc);
-        }
+    public Snake(int startX, int startY, String initTraj, App app){ //initTraj accepts left, right, up, down
         
-        this.curApp = app;
-        this.spriteTrack = 0;
-        this.snakeHead = new Node("head", initTraj, null, null, startX, startY, headSprite);
+        
+        this.snakeHead = new Node("head", initTraj, null, null, startX, startY, app.getAllSprites().get("SnakeHead"));
         this.snakeTail = snakeHead;
-        this.consumedFruit = false;
         this.isMoving = true;
+        this.consumedFruit = false;
         this.snakeSize = 0;
+        this.spriteTrack = 0;
     }
 
-    public void tick(){ //updates snake position
+    public void tick(App app){ //updates snake position
         if(this.isMoving == true){
-            Node newTail = this.generateNewTail(); //potential new tail
+            Node newTail = this.generateNewTail(app); //potential new tail
             Node oldTailNext = this.snakeTail.getNextNode();
 
             Node cursor = this.snakeTail;
@@ -60,7 +51,6 @@ public class Snake{
                 }
 
                 if(cursor.getNextNode() == null){ 
-                    this.spriteTrack = (this.spriteTrack + 1) % 5;
                     break; 
                 }
                 cursor = cursor.getNextNode();
@@ -72,23 +62,23 @@ public class Snake{
                     if(oldTailNext != null){ oldTailNext.updatePrevNode(this.snakeTail); }
                 }
                 this.snakeTail = newTail;
-
+                this.spriteTrack = (this.spriteTrack + 1) % 5;
                 this.snakeSize += 1;
                 this.consumedFruit = false;
             }
         }
     }
     
-    public void draw(){ 
+    public void draw(App app){ 
         Node cursor = this.snakeHead;
         while(cursor != null){
-            this.curApp.image(cursor.getSprite(), cursor.getCorX(), cursor.getCorY());
+            cursor.draw(app);
             if(cursor.getPrevNode() != null){ cursor = cursor.getPrevNode(); } 
             else{ break; }
         }
     }
 
-    public Node generateNewTail(){
+    public Node generateNewTail(App app){
         
         Node cursor = this.snakeHead;
         while(cursor.getPrevNode() != null){
@@ -98,11 +88,15 @@ public class Snake{
         String oldTailTraj = cursor.getNodeTraj();
         int oldTailCorX = cursor.getCorX();
         int oldTailCorY = cursor.getCorY();
-        Node newTail = new Node("body", oldTailTraj, cursor, null, oldTailCorX, oldTailCorY, this.bodySpritesAll[this.spriteTrack]);
+        Node newTail = new Node("body", oldTailTraj, cursor, null, oldTailCorX, oldTailCorY, app.getAllSprites().get("SnakeBody" + (this.spriteTrack + 1)));
         return newTail;
     }
 
     public boolean snakeCollision(){
+        if(this.snakeHead.getCorX() < 40 || this.snakeHead.getCorX() > 640 || this.snakeHead.getCorY() < 40 || this.snakeHead.getCorY() > 680){
+            return true;
+        }
+        
         if(this.snakeSize > 3){
             Node cursor = this.snakeHead.getPrevNode();
             while(cursor != null){
@@ -112,10 +106,6 @@ public class Snake{
                 cursor = cursor.getPrevNode();
             }
             return false; 
-        }
-
-        if(this.snakeHead.getCorX() < 40 || this.snakeHead.getCorX() > 640 || this.snakeHead.getCorY() < 40 || this.snakeHead.getCorY() > 640){
-            return true;
         }
 
         return false;
@@ -148,6 +138,10 @@ class Node{
         this.corX = corX;
         this.corY = corY;
         this.sprite = sprite;
+    }
+
+    public void draw(App app){
+        app.image(this.sprite, this.corX, this.corY);
     }
 
     public String getNodeTraj(){ return this.nodeTraj; }
