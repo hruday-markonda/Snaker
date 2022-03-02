@@ -4,10 +4,10 @@ import processing.core.PApplet;
 
 public class MainMenu{
 
-    private boolean tempTrack;
+    private boolean tempTrack = true;
 
     public MainMenu(){
-        this.tempTrack = true;
+        // this.tempTrack = true;
     }
 
     public void tick(GameManager GameManager, App app){ 

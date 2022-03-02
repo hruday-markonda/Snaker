@@ -15,6 +15,7 @@ public class App extends PApplet {
     //GAME MANAGER IS LOADED
     private GameManager GameManager;
     private HashMap<String, PImage> allSprites = new HashMap<String, PImage>();
+    private HashMap<String, String> badTurns = new HashMap<String, String>();
     private int frameCount = 0;
     private PFont gameFont;
     //
@@ -31,6 +32,10 @@ public class App extends PApplet {
 
         this.allSprites.put("background", this.loadImage("src/main/resources/backgrounds/moon_background.jpeg"));
         this.allSprites.put("SnakeHead", this.loadImage("src/main/resources/snake/SnakeHead.png"));
+        
+        this.allSprites.put("chilli", this.loadImage("src/main/resources/fruit/chilli.png"));
+        this.allSprites.put("apple", this.loadImage("src/main/resources/fruit/apple.png"));
+
         for(int i = 0; i < 5; i++){
             String imageSrc = "src/main/resources/snake/SnakeBody" + (i+1) + ".png";
             allSprites.put("SnakeBody" + (i+1), this.loadImage(imageSrc));
@@ -40,6 +45,11 @@ public class App extends PApplet {
             String imageSrc = "src/main/resources/tile/wall" + (i+1) + ".png";
             allSprites.put("wall"+(i+1), this.loadImage(imageSrc));
         }
+
+        badTurns.put("left", "right");
+        badTurns.put("up", "down");
+        badTurns.put("right", "left");
+        badTurns.put("down", "up");
             
     }
 
@@ -56,7 +66,7 @@ public class App extends PApplet {
     public void keyReleased(){ 
         this.GameManager.keyHandler(keyCode); 
         if(this.GameManager.getScreenName() == "game"){
-            this.GameManager.returnGameScreen().gameInput(this.GameManager.returnKeyInput(), this.GameManager);
+            this.GameManager.returnGameScreen().gameInput(this.GameManager.returnKeyInput(), this.GameManager, this);
         }
     }
 
@@ -74,4 +84,6 @@ public class App extends PApplet {
     public int getFrameCount(){ return this.frameCount; }
 
     public void resetGame(){ this.GameManager.resetGame(this); }
+
+    public HashMap<String, String> getBadTurns(){ return this.badTurns; }
 }

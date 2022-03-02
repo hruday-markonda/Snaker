@@ -8,20 +8,17 @@ public class Snake{
 
     private Node snakeHead; //snakeHead acts more like a tail
     private Node snakeTail;
-    private boolean isMoving;
-    private boolean consumedFruit;
-    private int snakeSize;
-    private int spriteTrack;
+    private boolean isMoving = true;
+    private boolean consumedFruit = false;
+    private int snakeSize = 1;
+    private int spriteTrack = 0;
 
     public Snake(int startX, int startY, String initTraj, App app){ //initTraj accepts left, right, up, down
         
         
         this.snakeHead = new Node("head", initTraj, null, null, startX, startY, app.getAllSprites().get("SnakeHead"));
         this.snakeTail = snakeHead;
-        this.isMoving = true;
-        this.consumedFruit = false;
-        this.snakeSize = 0;
-        this.spriteTrack = 0;
+        // this.isMoving = true;
     }
 
     public void tick(App app){ //updates snake position
@@ -115,7 +112,13 @@ public class Snake{
 
     public void setMoving(boolean newValue){ this.isMoving = newValue; }
 
-    public void changeHeadTraj(String newTraj){ this.snakeHead.updateTrajectory(newTraj); }
+    public void changeHeadTraj(String newTraj, App app){ 
+        String curHeadTraj = this.snakeHead.getNodeTraj();
+        String badTurn = app.getBadTurns().get(curHeadTraj);
+
+        if(newTraj.equals(badTurn) && this.snakeSize > 1){ return; }
+        this.snakeHead.updateTrajectory(newTraj); 
+    }
 
     public void setConsFruit(){ this.consumedFruit = true; }
 }

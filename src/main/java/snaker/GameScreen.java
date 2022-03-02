@@ -8,12 +8,11 @@ import java.util.Arrays;
 public class GameScreen{
     //Attributes
     private Snake gameSnake;
-    private boolean gameDone;
-    private int randomWallIndex;
+    private boolean gameDone = false;
+    private int randomWallIndex = (int)Math.round((Math.random() * 2));
+    //private double speedFrameBuffer = 60;
 
     public GameScreen(App app){
-
-        int randomWallIndex = (int)Math.round((Math.random() * 2));
 
         int randomX = (int)(Math.random() * 14) * 40 + 80;
         int randomY = (int)(Math.random() * 14) * 40 + 80;
@@ -21,13 +20,16 @@ public class GameScreen{
         String[] directions = {"right", "left", "up", "down"};
         String randomTraj = directions[randomIndex];
         this.gameSnake = new Snake(randomX, randomY, randomTraj, app);
-        this.gameDone = false;
     }
 
-    public void tick(){
+    public void tick(App app){
         if(this.gameSnake.snakeCollision() == true || this.gameSnake.getSnakeSize() == 256){
             this.gameSnake.setMoving(false);
             this.gameDone = true;
+        }
+
+        if (app.getFrameCount() == 59){
+            this.gameSnake.tick(app);
         }
     }
 
@@ -44,9 +46,6 @@ public class GameScreen{
             app.image(wallSprite, 17*40, i*40);
         }
 
-        if (app.getFrameCount() == 59){
-            this.gameSnake.tick(app);
-        }
         this.gameSnake.draw(app);
 
         if(this.gameDone == true){
@@ -65,9 +64,9 @@ public class GameScreen{
         }
     }
 
-    public void gameInput(String newKeyInput, GameManager GameManager){
+    public void gameInput(String newKeyInput, GameManager GameManager, App app){
 
-        if(Arrays.asList("up", "down", "left", "right").contains(newKeyInput)){ this.gameSnake.changeHeadTraj(newKeyInput); } 
+        if(Arrays.asList("up", "down", "left", "right").contains(newKeyInput)){ this.gameSnake.changeHeadTraj(newKeyInput, app); } 
         else if(newKeyInput == "enter"){ this.gameSnake.setConsFruit(); } 
         else if(newKeyInput == "Q"){ GameManager.changeScreen("main"); }
         GameManager.setKeyInput("");
