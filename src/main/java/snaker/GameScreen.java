@@ -4,12 +4,16 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import java.lang.Math;
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameScreen{
     //Attributes
     private Snake gameSnake;
     private boolean gameDone = false;
     private int randomWallIndex = (int)Math.round((Math.random() * 2));
+    //private ArrayList<Consumable> = new ArrayList<String>();
+    final List<String> directions = Arrays.asList("up", "down", "left", "right");
     //private double speedFrameBuffer = 60;
 
     public GameScreen(App app){
@@ -17,20 +21,26 @@ public class GameScreen{
         int randomX = (int)(Math.random() * 14) * 40 + 80;
         int randomY = (int)(Math.random() * 14) * 40 + 80;
         int randomIndex = (int)Math.round((Math.random() * 3));
-        String[] directions = {"right", "left", "up", "down"};
-        String randomTraj = directions[randomIndex];
+        String randomTraj = directions.get(randomIndex);
         this.gameSnake = new Snake(randomX, randomY, randomTraj, app);
     }
 
     public void tick(App app){
-        if(this.gameSnake.snakeCollision() == true || this.gameSnake.getSnakeSize() == 256){
+        if(this.gameSnake.snakeCollision() == true || this.gameSnake.getSnakeSize() == 256 || this.gameSnake.getSnakeSize() == 0){
             this.gameSnake.setMoving(false);
             this.gameDone = true;
         }
-
         if (app.getFrameCount() == 59){
-            this.gameSnake.tick(app);
+            if (this.gameDone == false){
+                this.gameSnake.tick(app);
+                this.placeItem();
+            }
         }
+    }
+
+    public void placeItem(){
+        int randomX = (int)(Math.random() * 14) * 40 + 80;
+        int randomY = (int)(Math.random() * 14) * 40 + 80;
     }
 
     public void draw(App app){
@@ -66,8 +76,9 @@ public class GameScreen{
 
     public void gameInput(String newKeyInput, GameManager GameManager, App app){
 
-        if(Arrays.asList("up", "down", "left", "right").contains(newKeyInput)){ this.gameSnake.changeHeadTraj(newKeyInput, app); } 
-        else if(newKeyInput == "enter"){ this.gameSnake.setConsFruit(); } 
+        if(directions.contains(newKeyInput)){ this.gameSnake.changeHeadTraj(newKeyInput, app); } 
+        else if(newKeyInput == "enter"){ this.gameSnake.consItem(false); } 
+        else if(newKeyInput == "D"){ this.gameSnake.consItem(true); } 
         else if(newKeyInput == "Q"){ GameManager.changeScreen("main"); }
         GameManager.setKeyInput("");
     }

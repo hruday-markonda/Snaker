@@ -8,7 +8,8 @@ public class InputHandler{
         RIGHT(39, "right"),
         DOWN(40, "down"),
         ENTER(10, "enter"),
-        Q(81, "Q");
+        Q(81, "Q"),
+        D(68, "D");
 
         public final int unicode;
         public final String dir;
@@ -31,6 +32,7 @@ public class InputHandler{
         else if (inputKey == Inputs.RIGHT.unicode) { this.keyInput = Inputs.RIGHT.dir; }
         else if (inputKey == Inputs.ENTER.unicode) { this.keyInput = Inputs.ENTER.dir; }
         else if (inputKey == Inputs.Q.unicode) { this.keyInput = Inputs.Q.dir; }
+        else if (inputKey == Inputs.D.unicode) { this.keyInput = Inputs.D.dir; }
 
         System.out.println(this.keyInput);
         

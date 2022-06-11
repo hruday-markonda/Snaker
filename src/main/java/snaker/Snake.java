@@ -10,11 +10,11 @@ public class Snake{
     private Node snakeTail;
     private boolean isMoving = true;
     private boolean consumedFruit = false;
+    private boolean consumedChilli = false;
     private int snakeSize = 1;
     private int spriteTrack = 0;
 
     public Snake(int startX, int startY, String initTraj, App app){ //initTraj accepts left, right, up, down
-        
         
         this.snakeHead = new Node("head", initTraj, null, null, startX, startY, app.getAllSprites().get("SnakeHead"));
         this.snakeTail = snakeHead;
@@ -62,6 +62,17 @@ public class Snake{
                 this.spriteTrack = (this.spriteTrack + 1) % 5;
                 this.snakeSize += 1;
                 this.consumedFruit = false;
+            }
+
+            else if(this.consumedChilli == true){ 
+                // if(this.snakeTail != null){
+                //     this.snakeTail.updatePrevNode(newTail);
+                //     if(oldTailNext != null){ oldTailNext.updatePrevNode(this.snakeTail); }
+                // }
+                if(oldTailNext != null){ oldTailNext.updatePrevNode(null); }
+                this.snakeTail = oldTailNext;
+                this.snakeSize -= 1;
+                this.consumedChilli = false;
             }
         }
     }
@@ -120,7 +131,15 @@ public class Snake{
         this.snakeHead.updateTrajectory(newTraj); 
     }
 
-    public void setConsFruit(){ this.consumedFruit = true; }
+    public void consItem(boolean isChilli){ 
+        if(isChilli == false){
+            this.consumedFruit = true;
+        }
+
+        else{
+            this.consumedChilli = true;
+        }
+    }
 }
 
 class Node{
