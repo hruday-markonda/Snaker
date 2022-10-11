@@ -1,6 +1,5 @@
 package snaker;
 
-
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PFont;
